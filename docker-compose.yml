@@ -1,0 +1,71 @@
+version: '3.8'
+
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.7.2-python3.10
+  environment:
+    - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://postgres:postgres@postgres:5432/airflow
+    - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://postgres:postgres@postgres:5432/airflow
+    - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./src:/opt/airflow/src
+    - ./data:/opt/airflow/data
+    - ./requirements.txt:/opt/airflow/requirements.txt
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+services:
+  # 1. PostgreSQL Database Service (Hosts both E-Commerce Data Warehouse and Airflow Metadata)
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_MULTIPLE_DATABASES=airflow,ecommerce_dw
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init-databases.sh:/docker-entrypoint-initdb.d/init-databases.sh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 2. Apache NiFi (Raw Data Ingestion Engine)
+  nifi:
+    image: apache/nifi:1.23.2
+    ports:
+      - "8080:8080"
+    environment:
+      - NIFI_WEB_HTTP_PORT=8080
+      - SINGLE_USER_CREDENTIALS_USERNAME=admin
+      - SINGLE_USER_CREDENTIALS_PASSWORD=nifipassword123
+    volumes:
+      - nifi_data:/opt/nifi/nifi-current/data
+      - ./data/raw:/opt/nifi/nifi-current/data/raw
+
+  # 3. Apache Airflow Webserver (UI Scheduler and Dag Monitor)
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8082:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # 4. Apache Airflow Scheduler (DAG Workflow Runner)
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+
+volumes:
+  postgres_data:
+  nifi_data:
