@@ -3,9 +3,8 @@
 
 > [!NOTE]
 > **Authors & Project Team:**
-> * **Vishwa Narayanaswamy** — Raw Data Ingestion, Cleaning, and Data Quality Framework
-> * **Sheerin Banu Shiek Mohamed** — ETL Workflow Development, Apache Airflow Orchestration, Docker Deployment
-> * **Koushik Raj Singh** — Data Warehouse Design, SQL Analytics, Power BI Dashboards, Documentation
+> * **Vishwa Narayanaswamy** — Raw Data Ingestion, Cleaning, and Data Quality Framework 
+> * **Koushik Raj Singh** — ETL Workflow Development, Apache Airflow Orchestration, Docker Deployment Data Warehouse Design, SQL Analytics, Power BI Dashboards, Documentation
 
 ---
 
@@ -177,7 +176,7 @@ erDiagram
 ```text
 ecommerce-data-platform/
 ├── dags/                          # Apache Airflow DAGs
-│   └── ecommerce_etl_pipeline.py  # Sheerin: Ingestion and load DAG configuration
+│   └── ecommerce_etl_pipeline.py
 ├── docker/                        # Docker configurations & scripts
 │   └── postgres/
 │       └── init-databases.sh      # Provisions multiple DBs (airflow + ecommerce_dw)
@@ -189,7 +188,7 @@ ecommerce-data-platform/
 │   │   ├── schema.sql             # Koushik: Table DDL, constraints & indexes
 │   │   └── analytics_queries.sql  # Koushik: Cohort & Sales SQL analytics suite
 │   ├── processing/                
-│   │   └── etl.py                 # Vishwa & Sheerin: Main ETL loading pipeline
+│   │   └── etl.py                 # Vishwa : Main ETL loading pipeline
 │   └── tests/                     
 │       └── test_database.py       # Vishwa: Pytest quality assertion assertions
 ├── docker-compose.yml             # Containerized services orchestrator
