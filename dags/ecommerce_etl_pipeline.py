@@ -1,7 +1,7 @@
 """
 Airflow Orchestration DAG for E-Commerce Data Warehouse ETL Pipeline
 Schedules: Daily at midnight (0 0 * * *)
-Author: Sheerin Banu Shiek Mohamed
+Author: koushik raj singh
 """
 
 from datetime import datetime, timedelta
@@ -12,10 +12,10 @@ import os
 
 # Default arguments for the DAG tasks
 default_args = {
-    'owner': 'sheerin',
+    'owner': 'koushik',
     'depends_on_past': False,
     'start_date': datetime(2026, 5, 25),
-    'email': ['sheerin.mohamed@ecommerce-dw.com'],
+    'email': ['koushik.raj@ecommerce-dw.com'],
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 2,
