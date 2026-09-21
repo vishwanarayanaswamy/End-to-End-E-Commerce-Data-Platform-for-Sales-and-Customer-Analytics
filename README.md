@@ -19,8 +19,8 @@
 
 | | Name | Focus |
 |---|---|---|
-| 🧹 | **Vishwa Narayanaswamy** | Raw data ingestion, cleaning, data quality framework |
-| 🔧 | **Koushik Raj Singh** | Airflow orchestration, Docker deployment, warehouse design, SQL analytics, Power BI |
+| 🧹 | **Vishwa Narayanaswamy** | Raw data ingestion, cleaning, data quality framework , Power BI|
+| 🔧 | **Koushik Raj Singh** | Airflow orchestration, Docker deployment, warehouse design, SQL analytics|
 
 ---
 
@@ -122,15 +122,7 @@ Unzip and open `End-to-End E-Commerce Data Platform Dashbord.pbix.zip` in Power 
 
 ---
 
-## ☁️ Cloud Deployment
 
-The original README includes a walkthrough for hosting the database on Neon or Supabase and connecting Power BI remotely — see `CLOUD_DEPLOYMENT.md`.
-
-> ⚠️ *That file is referenced here but wasn't found at the repo root as of this check — confirm it's actually committed, or fold that section back into this README if it went missing.*
-
----
-
-<div align="center">
 
 *Built as a data engineering capstone project — automated ingestion to interactive analytics, containerized end to end.*
 
